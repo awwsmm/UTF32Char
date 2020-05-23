@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    "noImplicitAny": true,
+    "removeComments": true,
+    "allowUnreachableCode": false,
+    "strictNullChecks": true,
+    "rootDir": "src",
+    "outDir": "build",
+    "lib": [ "es6" ],
+    "target": "es5",
+    "module": "commonjs"
+  },
+  "exclude" : [
+    "test/**"
+  ]
+}
