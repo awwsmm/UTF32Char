@@ -4,11 +4,14 @@ export class UInt32 {
 
   private _value: number
 
+  // As UInt32's constructor truncates floating-point values to integers, there
+  // may be undefined behavior around (-eps) and (2**32 - 1 + eps) for small eps.
+
   constructor (value: number) {
-    let rounded = Math.round(value)
-    if (rounded < 0) throw new Error("range error: UInt32 has minimum 0")
-    if (rounded > 4294967295) throw new Error("range error: UInt32 has maximum 4294967295 (2^32 - 1)")
-    this._value = rounded
+    let truncated = Math.floor(value)
+    if (truncated < 0) throw new Error(`range error: UInt32 has minimum 0, received ${value}`)
+    if (truncated > 4294967295) throw new Error(`range error: UInt32 has maximum 4294967295 (2^32 - 1), received ${value}`)
+    this._value = truncated
   }
 
   toNumber(): number {
@@ -38,6 +41,22 @@ export class UInt32 {
 
   static fromString (str: string): UInt32 {
     return UInt32.fromUTF32Char(new UTF32Char(str))
+  }
+
+  plus (that: number | UInt32): UInt32 {
+    if (typeof that === "number") {
+      return UInt32.fromNumber(this.toNumber() + that)
+    } else {
+      return UInt32.fromNumber(this.toNumber() + that.toNumber())
+    }
+  }
+
+  minus (that: number | UInt32): UInt32 {
+    if (typeof that === "number") {
+      return UInt32.fromNumber(this.toNumber() - that)
+    } else {
+      return UInt32.fromNumber(this.toNumber() - that.toNumber())
+    }
   }
 
 }

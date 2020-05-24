@@ -1,13 +1,22 @@
 import * as fc from 'fast-check'
 
-export function forAllInRange (minIncl: number, maxExcl: number, expectation: (_: number) => void, round: boolean = false) {
+function checkRange (value: number, minIncl: number, maxExcl: number, truncate: boolean, eps: number): number {
+  if (Math.abs(minIncl - maxExcl) < eps)
+    throw new Error(`min (${minIncl}) and max (${maxExcl}) are too close, this may result in undefined behavior`)
+
+  let result = value * (maxExcl - minIncl) + minIncl
+  if (truncate) result = Math.floor(result)
+  return result
+}
+
+export function forAllInRange (
+  minIncl: number, maxExcl: number,
+  expectation: (x: number) => void,
+  truncate: boolean = true, eps: number = 0.00001) {
+
   fc.assert(
     fc.property(
-      fc.double().map(x => {
-        let delta = x * (maxExcl - minIncl)
-        if (round) delta = Math.round(delta)
-        return delta + minIncl
-      }),
+      fc.double().map(x => checkRange(x, minIncl, maxExcl, truncate, eps)),
       value => { expectation(value) }
     )
   )
