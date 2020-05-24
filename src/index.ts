@@ -14,3 +14,10 @@
 
 export { UInt32 } from './UInt32'
 export { UTF32Char } from './UTF32Char'
+
+// to publish:
+//   $ npx tsc
+//   $ git commit -am <message>
+//   $ npm version <major/minor/patch>
+//   $ npm publish
+//   $ git push

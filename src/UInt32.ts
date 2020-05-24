@@ -4,13 +4,18 @@ export class UInt32 {
 
   private _value: number
 
+  static MIN_VALUE: number = 0
+  static MAX_VALUE: number = 2**32 - 1
+
   // As UInt32's constructor truncates floating-point values to integers, there
   // may be undefined behavior around (-eps) and (2**32 - 1 + eps) for small eps.
 
   constructor (value: number) {
     let truncated = Math.floor(value)
-    if (truncated < 0) throw new Error(`range error: UInt32 has minimum 0, received ${value}`)
-    if (truncated > 4294967295) throw new Error(`range error: UInt32 has maximum 4294967295 (2^32 - 1), received ${value}`)
+    if (truncated < UInt32.MIN_VALUE)
+      throw new Error(`range error: UInt32 has MIN_VALUE 0, received ${value}`)
+    if (truncated > UInt32.MAX_VALUE)
+      throw new Error(`range error: UInt32 has MAX_VALUE 4294967295 (2^32 - 1), received ${value}`)
     this._value = truncated
   }
 
