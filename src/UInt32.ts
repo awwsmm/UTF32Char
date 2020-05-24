@@ -23,7 +23,7 @@ export class UInt32 {
   }
 
   toUTF32Char(): UTF32Char {
-    if (this.toNumber() < 65536) return new UTF32Char(String.fromCharCode(this.toNumber()))
+    if (this.lt(65536)) return new UTF32Char(String.fromCharCode(this.toNumber()))
 
     let hiChar = this.toNumber() >> 16
     let loChar = this.toNumber() & 0x0000FFFF
@@ -58,5 +58,41 @@ export class UInt32 {
       return UInt32.fromNumber(this.toNumber() - that.toNumber())
     }
   }
+
+  private compare (obj: number | UInt32): number {
+    let _this: number = this.toNumber()
+    let _that: number
+
+    if (typeof obj === "number") _that = obj
+    else                         _that = obj.toNumber()
+
+         if (_this < _that) return -1
+    else if (_this > _that) return  1
+    else                    return  0
+  }
+
+  lt (that: number | UInt32): boolean {
+    return this.compare(that) < 0
+  }
+
+  lessThan = this.lt
+
+  gt (that: number | UInt32): boolean {
+    return this.compare(that) > 0
+  }
+
+  greaterThan = this.gt
+
+  le (that: number | UInt32): boolean {
+    return this.compare(that) < 1
+  }
+
+  lessThanOrEqualTo = this.lt
+
+  ge (that: number | UInt32): boolean {
+    return this.compare(that) > -1
+  }
+
+  greaterThanOrEqualTo = this.gt
 
 }

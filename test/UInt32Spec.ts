@@ -73,7 +73,7 @@ describe('UInt32', () => {
         expect(num1 + uint2.toNumber()).to.equal(valueSum)
       })
     })
-  })
+  }).timeout(10000)
 
   it ("throws an error when plus() would yield a sum out of range", () => {
     forAllInRange(aboveMin, maxValid, (num1: number) => {
@@ -89,7 +89,7 @@ describe('UInt32', () => {
         expect(() => uint1.plus(num2)).to.throw()
       })
     })
-  }).timeout(5000)
+  }).timeout(10000)
 
   it ("can subtract or be subtracted from any other number or UInt32, provided the difference is in range", () => {
     forAllInRange(minValid, maxValid, (num1: number) => {
@@ -109,7 +109,7 @@ describe('UInt32', () => {
         expect(v1 - uint2.toNumber()).to.equal(valueDiff)
       })
     })
-  })
+  }).timeout(10000)
 
   it ("throws an error when minus() would yield a difference out of range", () => {
     forAllInRange(minValid, belowMax, (num1: number) => {
@@ -127,6 +127,54 @@ describe('UInt32', () => {
         expect(() => uint2.minus(v1)).to.throw()
       })
     })
-  }).timeout(5000)
+  }).timeout(10000)
+
+  it ("correctly compares to other values with greaterThan and lessThan", () => {
+    forAllInRange(minValid, belowMax, (num1: number) => {
+      forAllInRange(minValid, belowMax, (num2: number) => {
+        let v1 = Math.max(num1, num2) + 1
+        let v2 = Math.min(num1, num2)
+
+        expect(v2 < v1)
+
+        let uint1 = new UInt32(v1)
+        let uint2 = new UInt32(v2)
+
+        expect(uint2.lt(uint1)).to.equal(true)
+        expect(uint2.lt(v1)).to.equal(true)
+        expect(uint2.lessThan(uint1)).to.equal(true)
+        expect(uint2.lessThan(v1)).to.equal(true)
+
+        expect(uint1.gt(uint2)).to.equal(true)
+        expect(uint1.gt(v2)).to.equal(true)
+        expect(uint1.greaterThan(uint2)).to.equal(true)
+        expect(uint1.greaterThan(v2)).to.equal(true)
+      })
+    })
+  }).timeout(10000)
+
+  it ("correctly compares to other values with greaterThanOrEqualTo and lessThanOrEqualTo", () => {
+    forAllInRange(minValid, maxValid, (num1: number) => {
+      forAllInRange(minValid, maxValid, (num2: number) => {
+        let v1 = Math.max(num1, num2)
+        let v2 = Math.min(num1, num2)
+
+        expect(v2 <= v1)
+
+        let uint1 = new UInt32(v1)
+        let uint2 = new UInt32(v2)
+
+        expect(uint2.le(uint1)).to.equal(true)
+        expect(uint2.le(v1)).to.equal(true)
+        expect(uint2.lessThanOrEqualTo(uint1)).to.equal(true)
+        expect(uint2.lessThanOrEqualTo(v1)).to.equal(true)
+
+        expect(uint1.ge(uint2)).to.equal(true)
+        expect(uint1.ge(v2)).to.equal(true)
+        expect(uint1.greaterThanOrEqualTo(uint2)).to.equal(true)
+        expect(uint1.greaterThanOrEqualTo(v2)).to.equal(true)
+      })
+    })
+  }).timeout(10000)
 
 })

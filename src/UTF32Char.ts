@@ -9,7 +9,7 @@ export class UTF32Char {
   }
 
   constructor (value: string) {
-    if (value.length < 1) throw new Error("invalid argument: cannot convert empty string to character")
+    if (value.length < 1) throw new Error("invalid argument: cannot convert empty string to UTF32Char")
     else if (value.length < 2) this._value = value
     else if (value.length < 3) this._value = value.slice(0, 2)
     else throw new Error("invalid argument: lossy compression of length-3+ string to UTF32Char")
