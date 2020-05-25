@@ -8,7 +8,7 @@ export class UInt32 {
   static MAX_VALUE: number = 2**32 - 1
 
   // As UInt32's constructor truncates floating-point values to integers, there
-  // may be undefined behavior around (-eps) and (2**32 - 1 + eps) for small eps.
+  // may be undefined behavior around (0 +/- eps) and (2**32 +/- eps) for small eps.
 
   constructor (value: number) {
     let truncated = Math.floor(value)
@@ -80,24 +80,32 @@ export class UInt32 {
     return this.compare(that) < 0
   }
 
-  lessThan = this.lt
+  lessThan (that: number | UInt32): boolean {
+    return this.lt(that)
+  }
 
   gt (that: number | UInt32): boolean {
     return this.compare(that) > 0
   }
 
-  greaterThan = this.gt
+  greaterThan (that: number | UInt32): boolean {
+    return this.gt(that)
+  }
 
   le (that: number | UInt32): boolean {
     return this.compare(that) < 1
   }
 
-  lessThanOrEqualTo = this.lt
+  lessThanOrEqualTo (that: number | UInt32): boolean {
+    return this.le(that)
+  }
 
   ge (that: number | UInt32): boolean {
     return this.compare(that) > -1
   }
 
-  greaterThanOrEqualTo = this.gt
+  greaterThanOrEqualTo (that: number | UInt32): boolean {
+    return this.ge(that)
+  }
 
 }

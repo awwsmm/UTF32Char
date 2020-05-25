@@ -17,6 +17,7 @@ export { UTF32Char } from './UTF32Char'
 
 // to publish:
 //   $ npx tsc
+//   $ git add .
 //   $ git commit -am <message>
 //   $ npm version <major/minor/patch>
 //   $ npm publish

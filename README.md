@@ -18,7 +18,7 @@ console.log("?".length) // 1
 console.log("💩".length) // 2
 ```
 
-...and with modifiers and accents, that number cna get much larger
+...and with modifiers and accents, that number can get much larger
 
 ```ts
 console.log("!͖̬̰̙̗̿̋ͥͥ̂ͣ̐́́͜͞".length) // 17
