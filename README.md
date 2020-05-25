@@ -1,6 +1,6 @@
 # UTF32Char
 
-A minimalist, dependency-free implementation of **immutable** [4-byte-width (UTF-32)](https://en.wikipedia.org/wiki/UTF-32) characters for easy manipulation of all characters and glyphs, including simple emoji.
+A minimalist, dependency-free implementation of **immutable** [4-byte-width (UTF-32)](https://en.wikipedia.org/wiki/UTF-32) characters for easy manipulation of characters and glyphs, including simple emoji.
 
 Also includes an **immutable** unsigned 4-byte-width integer data type, `UInt32` and easy conversions from and to `UTF32Char`.
 
@@ -18,9 +18,17 @@ console.log("?".length) // 1
 console.log("💩".length) // 2
 ```
 
-As all Unicode characters can be expressed with [a fixed-length UTF-32 encoding](https://en.wikipedia.org/wiki/UTF-32), this mitigates the problem a bit, [though it doesn't completely solve it](https://blog.jonnew.com/posts/poo-dot-length-equals-two).
+...and with modifiers and accents, that number cna get much larger
 
-This package provides that encoding with UTF-32 "characters" `UTF32Char` and corresponding unsigned integers `UInt32`. The unsigned integers have an added benefit of being usable as safe array indices.
+```ts
+console.log("!͖̬̰̙̗̿̋ͥͥ̂ͣ̐́́͜͞".length) // 17
+```
+
+As all Unicode characters can be expressed with [a fixed-length UTF-32 encoding](https://en.wikipedia.org/wiki/UTF-32), this package mitigates the problem a bit, [though it doesn't completely solve it](https://blog.jonnew.com/posts/poo-dot-length-equals-two). **Note that I do not claim to have solved this issue**, and this package accepts any group of one to four bytes as a "single UTF-32 character", [whether or not they are rendered as a single grapheme](https://news.ycombinator.com/item?id=13830177). See [this package](https://github.com/orling/grapheme-splitter) if you want to split text into graphemes, regardless of the number of bytes required to render each grapheme.
+
+If you just want a simple, dependency-free API to deal with 4-byte strings, then this package is for you.
+
+This package provides an implementation of 4-byte, UTF-32 "characters" `UTF32Char` and corresponding unsigned integers `UInt32`. The unsigned integers have an added benefit of being usable as safe array indices.
 
 ## Installation
 
@@ -77,6 +85,17 @@ let tooShort: UTF32Char = UTF32Char.fromString("")
 
 let tooLong: UTF32Char = UTF32Char.fromString("hey!")
 // invalid argument: lossy compression of length-3+ string to UTF32Char
+```
+
+Because the implementation accepts any 4-byte `string` as a "character", the following are allowed
+
+```ts
+let char: UTF32Char = UTF32Char.fromString("hi")
+let num: number = char.toNumber()
+
+console.log(num) // 6815849
+console.log(char.toString()) // hi
+console.log(UTF32Char.fromNumber(num).toString()) // hi
 ```
 
 Floating-point values are truncated to integers when creating `UInt32`s, like in many other languages:
