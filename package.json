@@ -1,6 +1,6 @@
 {
   "name": "utf32char",
-  "version": "1.3.2",
+  "version": "1.4.0",
   "description": "4-byte-width (UTF-32) characters and unsigned integers for working with strings",
   "main": "build/index.js",
   "types": "build/index.d.ts",
