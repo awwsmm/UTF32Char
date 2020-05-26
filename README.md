@@ -36,6 +36,14 @@ Install from [npm](https://www.npmjs.com/package/utf32char) with
 
 `$ npm i utf32char`
 
+Or try it online at [npm.runkit.com](https://npm.runkit.com/utf32char)
+
+```ts
+var lib = require("utf32char")
+
+let char = new lib.UTF32Char("😮")
+```
+
 ## Use
 
 Create new `UTF32Char`s and `UInt32`s like so

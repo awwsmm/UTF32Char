@@ -16,6 +16,7 @@ export { UInt32 } from './UInt32'
 export { UTF32Char } from './UTF32Char'
 
 // to publish:
+//   $ npm run test
 //   $ npx tsc
 //   $ git add .
 //   $ git commit -am <message>
