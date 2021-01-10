@@ -1,5 +1,5 @@
 {
-  "name": "utf32char",
+  "name": "@awwsmm/utf32char",
   "version": "1.4.1",
   "description": "4-byte-width (UTF-32) characters and unsigned integers for working with strings",
   "main": "build/index.js",
@@ -10,7 +10,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/awwsmm/UTF32Char.git"
+    "url": "https://github.com/awwsmm/UTF32Char.git"
   },
   "keywords": [
     "utf32",
@@ -36,5 +36,8 @@
     "mocha": "^7.2.0",
     "ts-node": "^8.10.1",
     "typescript": "^3.9.3"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
   }
 }
